@@ -2,6 +2,8 @@ const express = require('express')
 const morgan = require('morgan')
 const config = require('./config/index')
 const indexRouter = require('./routes/index')
+
+
 require('./database')
 
 const app = express()
