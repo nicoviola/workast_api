@@ -1,10 +1,11 @@
 const express = require('express')
 const morgan = require('morgan')
+const config = require('./config/index')
 const indexRouter = require('./routes/index')
 require('./database')
 
 const app = express()
-app.set('port', 3000)
+app.set('port', config.api_listening_port)
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json())
