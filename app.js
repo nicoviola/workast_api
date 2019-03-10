@@ -3,9 +3,9 @@ const express = require('express')
 const morgan = require('morgan')
 const config = require('./config/index')
 const indexRouter = require('./routes/index')
+const usersRouter = require('./routes/users')
 const cors = require('cors')
 let errorHandler = require('./middlewares/error')
-
 
 require('./database')
 
@@ -39,6 +39,7 @@ app.options('*', cors(corsOptions))
 app.use(cors(corsOptionsDelegate))
 
 app.use('/', indexRouter)
+app.use('/users',usersRouter)
 
 
 // catch 404 and forward to error handler

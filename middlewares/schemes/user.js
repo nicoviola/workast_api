@@ -1,4 +1,4 @@
-const Joi = require('Joi')
+const Joi = require('joi')
 const datatypes = require('./datatypes')
 
 /**
@@ -6,8 +6,8 @@ const datatypes = require('./datatypes')
  */
 
 let createUser = Joi.object({
-    name: datatypes.userName,
-    avatar: datatypes.userAvatar
+    name: datatypes.userName.required(),
+    avatar: datatypes.userAvatar.required()
 })
 
 module.exports = {

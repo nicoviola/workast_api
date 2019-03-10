@@ -11,15 +11,15 @@ module.exports = function (err, req, res, next) {
         success: false,
         error: {
             code: err.code || 500,
-            message: err.message || 'Internal server error'
+            message: err.message || 'Internal server error',
         }
     }
     /**
      * Mongo validation error (from the model)
      */
-    if (err.name === 'MongoValidationError') {
-        let validationError = err.errors[0]
-        response.error.code = errors['ValidationError'].code
+    if (err.name == 'ValidationError' ) {
+        let validationError = errors.ValidationError
+        response.error.code = validationError.code
         response.error.message = validationError.message
     }
 
