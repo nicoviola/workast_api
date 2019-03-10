@@ -18,4 +18,8 @@ module.exports = {
         code: 1004,
         message: 'User already exists'
     },
+    'UserNotFound': {
+    code: 1005,
+        message: 'User not found'
+    },
 }
