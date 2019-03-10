@@ -14,4 +14,8 @@ module.exports = {
         code: 1003,
         message: 'Invalid credentials'
     },
+    'UserAlreadyExists': {
+        code: 1004,
+        message: 'User already exists'
+    },
 }

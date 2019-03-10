@@ -6,7 +6,7 @@ const globalConstants = require('../../const/globalConstants')
  */
 
 let userName = Joi.string().empty().max(255)
-let userAvatar = Joi.string.empty().regex(globalConstants.URL_REGEX)
+let userAvatar = Joi.string().empty().regex(globalConstants.URL_REGEX)
 
 module.exports = {
     userName,
