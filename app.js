@@ -19,3 +19,5 @@ app.use('/', indexRouter)
 app.listen(app.get('port'), ()=>{
     console.log('listening on port ',app.get('port') )
 })
+
+module.exports = app
