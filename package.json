@@ -4,7 +4,7 @@
   "description": "express mongodb api",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "test": "export ENVIROMENT=test && mocha --recursive --timeout 5000"
   },
   "keywords": [
     "express",
@@ -14,12 +14,19 @@
   "author": "nicoviola",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "http-errors": "^1.7.2",
+    "joi": "^14.3.1",
+    "mocha": "^6.0.2",
     "mongoose": "^5.4.18",
     "mongoose-validator": "^2.1.0",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
