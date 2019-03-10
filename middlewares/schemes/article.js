@@ -8,7 +8,8 @@ const datatypes = require('./datatypes')
 let createArticle = Joi.object({
     title: datatypes.articleTitle.required(),
     text: datatypes.articleText.required(),
-    userId: datatypes.objectId.required()
+    userId: datatypes.objectId.required(),
+    tags: datatypes.tags.optional()
 })
 
 module.exports = {

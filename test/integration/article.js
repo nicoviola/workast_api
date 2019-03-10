@@ -2,6 +2,7 @@ process.env.ENVIRONMENT = 'test'
 
 const path = require('path')
 const chai = require('chai')
+const faker = require('faker')
 const chaiHttp = require('chai-http')
 const Article = require(path.join(__dirname, '/../../models/Article'))
 const User = require(path.join(__dirname, '/../../models/User'))
@@ -28,7 +29,7 @@ describe('Integration - Article ', () => {
     })
 
     describe('POST article/ ', () => {
-        it('Should create a Article', (done) => {
+        it('Should create an Article', (done) => {
             articleMock = articleFactory()
             articleMock.userId = userMock._id
             chai.request(server)
@@ -48,6 +49,24 @@ describe('Integration - Article ', () => {
         })
         it('Shouldṇ\'t create a Article without userId', (done) => {
             let article = articleFactory({name: articleMock.name})
+            chai.request(server)
+                .post('/articles')
+                .send(article)
+                .set('X-api-key', config.apiKey)
+                .end((err, res) => {
+                    if(err){
+                        done(err)
+                    }
+                    res.body.should.have.property('success').eql(false)
+                    res.body.should.have.property('error').to.be.not.empty
+                    res.body.error.should.have.property('code').eql(errors.MissingParameters.code)
+                    done()
+                })
+
+        })
+        it('Shouldṇ\'t create a Article with an invalid userId', (done) => {
+            let article = articleFactory({name: articleMock.name})
+            article.userId = faker.random.uuid()
             chai.request(server)
                 .post('/articles')
                 .send(article)

@@ -10,11 +10,13 @@ let userAvatar = Joi.string().empty().regex(globalConstants.URL_REGEX)
 let objectId = Joi.objectId()
 let articleText = Joi.string().empty()
 let articleTitle = Joi.string().empty().max(255)
+let tags = Joi.array().items(Joi.string())
 
 module.exports = {
     userName,
     userAvatar,
     objectId,
     articleText,
-    articleTitle
+    articleTitle,
+    tags
 }
