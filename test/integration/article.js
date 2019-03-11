@@ -16,18 +16,27 @@ let articleMock
 let userMock
 let unsavedUserId
 chai.use(chaiHttp)
-
+const persistedArticles = []
+const tags = [];
 describe('Integration - Article ', () => {
 
     before(async () => {
         await Article.deleteMany({})
         userMock = new User(userFactory())
+        const promises = []
         // Create the user who wrote the article
         await userMock.save()
         unsavedUserId = new User(userFactory())._id
         articleMock = new Article(articleFactory())
         articleMock.userId = userMock._id
-        await articleMock.save()
+        promises.push(articleMock.save())
+        tags.push(faker.hacker.verb(), faker.hacker.verb())
+        persistedArticles.push(new Article(articleFactory({tags:tags})), new Article(articleFactory({tags: [tags[0]]})),new Article(articleFactory()))
+        persistedArticles.forEach((article)=>{
+            article.userId = userMock._id
+            promises.push(article.save())
+        })
+        await Promise.all(promises)
 
     })
 
@@ -105,7 +114,7 @@ describe('Integration - Article ', () => {
         })
     })
 
-    describe('POST article/:id', () => {
+    describe('POST articles/:id', () => {
         it('should update an article', (done) => {
             let article = articleFactory()
             chai.request(server)
@@ -162,7 +171,7 @@ describe('Integration - Article ', () => {
 
     })
 
-    describe('DELETE article/:id', () => {
+    describe('DELETE articles/:id', () => {
         it('should delete an article', (done) => {
             chai.request(server)
                 .delete(`/articles/${articleMock._id}`)
@@ -193,6 +202,68 @@ describe('Integration - Article ', () => {
                 })
         })
     })
+
+    describe('GET articles/search?tags=[]', () => {
+        it('should get the two articles that contains the given tag', (done) => {
+            let testTag= tags[0]
+            chai.request(server)
+                .get(`/articles/search?tags[]=${testTag}`)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('success')
+                    res.body.data.should.have.property('articles').not.to.be.empty
+                    res.body.data.articles.should.have.property("length").eql(2)
+                    res.body.data.articles.forEach((article) => {
+                        expect(article.tags).to.include.members([testTag])
+                    })
+                    done()
+                })
+        })
+
+        it('should get the one article that contains the given tag', (done) => {
+            let testTag = tags[1]
+            chai.request(server)
+                .get(`/articles/search?tags[]=${testTag}`)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('success')
+                    res.body.data.should.have.property('articles').not.to.be.empty
+                    res.body.data.articles.should.have.property("length").eql(1)
+                    res.body.data.articles.forEach((article) => {
+                        expect(article.tags).to.include.members([testTag])
+                    })
+                    done()
+                })
+        })
+        it('should get the two article that contains the at least one of the given tags', (done) => {
+            let testTags = tags
+            chai.request(server)
+                .get(`/articles/search?tags[]=${testTags[0]}&tags[]=${testTags[1]}`)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('success')
+                    res.body.data.should.have.property('articles').not.to.be.empty
+                    res.body.data.articles.should.have.property("length").eql(2)
+                    res.body.data.articles.forEach((article) => {
+                        expect(article.tags).to.include.members(testTags)
+                    })
+                    done()
+                })
+        })
+    })
+
 
     after(async () => {
         await Article.deleteMany({})
