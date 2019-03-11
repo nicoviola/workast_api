@@ -14,4 +14,9 @@ router.get('/', articleController.list)
  */
 router.post('/', validate(articleSchemes.createArticle), articleController.createArticle)
 
+/*** POST article/:id
+ * Updates an already existing article
+ */
+router.post('/:id', validate(articleSchemes.updateArticle), articleController.updateArticle)
+
 module.exports = router
