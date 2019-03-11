@@ -12,6 +12,14 @@ let createArticle = Joi.object({
     tags: datatypes.tags.optional()
 })
 
+let updateArticle = Joi.object({
+    title: datatypes.articleTitle.optional(),
+    text: datatypes.articleText.optional(),
+    userId: datatypes.objectId.optional(),
+    tags: datatypes.tags.optional()
+})
+
 module.exports = {
-    createArticle
+    createArticle,
+    updateArticle
 }

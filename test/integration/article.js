@@ -25,16 +25,19 @@ describe('Integration - Article ', () => {
         // Create the user who wrote the article
         await userMock.save()
         unsavedUserId = new User(userFactory())._id
+        articleMock = new Article(articleFactory())
+        articleMock.userId = userMock._id
+        await articleMock.save()
 
     })
 
     describe('POST article/ ', () => {
         it('Should create an Article', (done) => {
-            articleMock = articleFactory()
-            articleMock.userId = userMock._id
+            let article = articleFactory()
+            article.userId = userMock._id
             chai.request(server)
                 .post('/articles')
-                .send(articleMock)
+                .send(article)
                 .set('X-api-key', config.apiKey)
                 .end((err, res) => {
                     if(err){
@@ -65,7 +68,7 @@ describe('Integration - Article ', () => {
 
         })
         it('Shouldṇ\'t create a Article with an invalid userId', (done) => {
-            let article = articleFactory({name: articleMock.name})
+            let article = articleFactory()
             article.userId = faker.random.uuid()
             chai.request(server)
                 .post('/articles')
@@ -102,8 +105,64 @@ describe('Integration - Article ', () => {
         })
     })
 
+    describe('POST article/:id', () => {
+        it('should update an article', (done) => {
+            let article = articleFactory()
+            chai.request(server)
+                .post(`/articles/${articleMock._id}`)
+                .send(article)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if(err){
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('success')
+                    res.body.should.have.property('message').eql('Article successfully upated')
+                    done()
+                })
+        })
+
+        it('Shouldṇ\'t update an article that has not been created yet', (done) => {
+            let article = articleFactory()
+            chai.request(server)
+                .post(`/articles/${unsavedUserId}`)
+                .send(article)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if(err){
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('error').to.be.not.empty
+                    res.body.error.should.have.property('code').eql(errors.ArticleNotFound.code)
+                    done()
+                })
+        })
+
+        it('Shouldṇ\'t update an article with an invalid user id', (done) => {
+            let article = articleFactory()
+            article.userId = unsavedUserId
+            chai.request(server)
+                .post(`/articles/${articleMock._id}`)
+                .send(article)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if(err){
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('error').to.be.not.empty
+                    res.body.error.should.have.property('code').eql(errors.UserNotFound.code)
+                    done()
+                })
+        })
+
+    })
+
     after(async () => {
         await Article.deleteMany({})
+        await User.deleteMany({})
     })
 
 
