@@ -64,7 +64,6 @@ module.exports = {
                 data: article
             })
 
-
         }catch (e) {
             next(e)
         }

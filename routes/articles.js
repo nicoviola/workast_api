@@ -17,6 +17,6 @@ router.post('/', validate(articleSchemes.createArticle), articleController.creat
 /*** POST article/:id
  * Updates an already existing article
  */
-router.post('/:id', validate(articleSchemes.updateArticle), articleController.updateArticle)
+router.post('/:id([0-9a-fA-F]{24})', validate(articleSchemes.updateArticle), articleController.updateArticle)
 
 module.exports = router

@@ -119,6 +119,8 @@ describe('Integration - Article ', () => {
                     res.should.have.status(200)
                     res.body.should.have.property('success')
                     res.body.should.have.property('message').eql('Article successfully updated')
+                    res.body.should.have.property('data').to.be.not.empty
+                    res.body.data.should.have.property('title').eql(article.title)
                     done()
                 })
         })
