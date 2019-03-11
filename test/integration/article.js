@@ -4,6 +4,8 @@ const path = require('path')
 const chai = require('chai')
 const faker = require('faker')
 const chaiHttp = require('chai-http')
+const assertArrays = require('chai-arrays');
+chai.use(assertArrays);
 const Article = require(path.join(__dirname, '/../../models/Article'))
 const User = require(path.join(__dirname, '/../../models/User'))
 const server = require(path.join(__dirname, '/../../app'))
@@ -218,7 +220,7 @@ describe('Integration - Article ', () => {
                     res.body.data.should.have.property('articles').not.to.be.empty
                     res.body.data.articles.should.have.property("length").eql(2)
                     res.body.data.articles.forEach((article) => {
-                        expect(article.tags).to.include.members([testTag])
+                        article.should.have.property('tags').to.be.containingAnyOf([testTag])
                     })
                     done()
                 })
@@ -238,7 +240,7 @@ describe('Integration - Article ', () => {
                     res.body.data.should.have.property('articles').not.to.be.empty
                     res.body.data.articles.should.have.property("length").eql(1)
                     res.body.data.articles.forEach((article) => {
-                        expect(article.tags).to.include.members([testTag])
+                        article.should.have.property('tags').to.be.containingAnyOf([testTag])
                     })
                     done()
                 })
@@ -257,7 +259,7 @@ describe('Integration - Article ', () => {
                     res.body.data.should.have.property('articles').not.to.be.empty
                     res.body.data.articles.should.have.property("length").eql(2)
                     res.body.data.articles.forEach((article) => {
-                        expect(article.tags).to.include.members(testTags)
+                        article.should.have.property('tags').to.be.containingAnyOf(testTags)
                     })
                     done()
                 })
