@@ -22,4 +22,8 @@ module.exports = {
     code: 1005,
         message: 'User not found'
     },
+    'ArticleNotFound': {
+    code: 1006,
+        message: 'Article not found'
+    },
 }
