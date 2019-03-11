@@ -162,6 +162,38 @@ describe('Integration - Article ', () => {
 
     })
 
+    describe('DELETE article/:id', () => {
+        it('should delete an article', (done) => {
+            chai.request(server)
+                .delete(`/articles/${articleMock._id}`)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('success')
+                    res.body.should.have.property('message').eql('Article successfully deleted')
+                    done()
+                })
+        })
+
+        it('Shouldṇ\'t delete an article that has not been created yet', (done) => {
+            chai.request(server)
+                .delete(`/articles/${unsavedUserId}`)
+                .set("X-api-key", config.apiKey)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                    }
+                    res.should.have.status(200)
+                    res.body.should.have.property('error').to.be.not.empty
+                    res.body.error.should.have.property('code').eql(errors.ArticleNotFound.code)
+                    done()
+                })
+        })
+    })
+
     after(async () => {
         await Article.deleteMany({})
         await User.deleteMany({})

@@ -68,6 +68,26 @@ module.exports = {
             next(e)
         }
 
+    },
+    deleteArticle: async (req, res, next) => {
+        const id = req.params.id
+        try{
+            let article = await Article.findOne({
+                _id: id
+            })
+            if(!article) {
+                return next(errors.ArticleNotFound)
+            }
+            await article.remove()
+            res.json({
+                success: true,
+                message: 'Article successfully deleted',
+                data: {}
+            })
+
+        }catch (e) {
+            next(e)
+        }
     }
 
 }
