@@ -19,4 +19,9 @@ router.post('/', validate(articleSchemes.createArticle), articleController.creat
  */
 router.post('/:id([0-9a-fA-F]{24})', validate(articleSchemes.updateArticle), articleController.updateArticle)
 
+/*** DELETE article/:id
+ * Deletes an already existing article
+ */
+router.delete('/:id([0-9a-fA-F]{24})',  articleController.deleteArticle)
+
 module.exports = router
