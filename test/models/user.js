@@ -3,7 +3,7 @@ const path = require('path')
 const userFactory = require(path.join(__dirname, '../factories/user'))
 const User = require(path.join(__dirname, '/../../models/User'))
 const expect = require('chai').expect
-require(path.join(__dirname, '/../../database'))
+//require(path.join(__dirname, '/../../database'))
 let userMock
 
 

@@ -32,8 +32,8 @@ describe('Integration - Article ', () => {
         articleMock = new Article(articleFactory())
         articleMock.userId = userMock._id
         promises.push(articleMock.save())
-        tags.push(faker.hacker.verb(), faker.hacker.verb())
-        persistedArticles.push(new Article(articleFactory({tags:tags})), new Article(articleFactory({tags: [tags[0]]})),new Article(articleFactory()))
+        tags.push(faker.lorem.word(), faker.lorem.word())
+        persistedArticles.push(new Article(articleFactory({tags:tags})), new Article(articleFactory({tags: [tags[0]]})),new Article(articleFactory({tags: ['tag', 'not', 'to', 'find']})))
         persistedArticles.forEach((article)=>{
             article.userId = userMock._id
             promises.push(article.save())
