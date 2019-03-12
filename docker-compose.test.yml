@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+
+  mongo_test:
+    image: mongo
+    volumes:
+      - mongodata_test:/var/lib/mongo/data
+
+  app_test:
+
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+    # Import .env data to api environment
+    env_file: ./.env
+
+    environment:
+      TEST_DB_HOST: 'mongodb://mongo_test'
+      ENVIRONMENT: "test"
+
+
+    depends_on:
+      - mongo_test
+    links:
+      - mongo_test:database
+
+    entrypoint: ./docker-entrypoint.sh
+
+    # Link the host src code to the container
+    volumes:
+      - ./src/:/home/workspace/app/src
+
+# Database volume
+volumes:
+  mongodata_test:

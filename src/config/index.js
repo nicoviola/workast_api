@@ -17,6 +17,7 @@ switch (process.env.ENVIRONMENT) {
         break
     case 'test':
         config = {...config, ...require('./test')}
+        break
 }
 
 
