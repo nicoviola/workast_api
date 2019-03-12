@@ -32,7 +32,7 @@ describe('Integration - Article ', () => {
         articleMock = new Article(articleFactory())
         articleMock.userId = userMock._id
         promises.push(articleMock.save())
-        tags.push(faker.hacker.verb(), faker.hacker.verb())
+        tags.push(faker.lorem.word(), faker.lorem.word())
         persistedArticles.push(new Article(articleFactory({tags:tags})), new Article(articleFactory({tags: [tags[0]]})),new Article(articleFactory()))
         persistedArticles.forEach((article)=>{
             article.userId = userMock._id

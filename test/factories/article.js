@@ -4,7 +4,7 @@ function defaultProps() {
     return {
         title: faker.company.catchPhrase(),
         text: faker.lorem.paragraphs(),
-        tags: [faker.hacker.verb(), faker.hacker.ingverb(), faker.hacker.verb()]
+        tags: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()]
     }
 }
 
