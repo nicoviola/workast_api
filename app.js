@@ -52,8 +52,5 @@ app.use(function (req, res, next) {
 // error handler
 app.use(errorHandler)
 
-app.listen(app.get('port'), ()=>{
-    console.log('listening on port ',app.get('port') )
-})
 
 module.exports = app

@@ -4,6 +4,7 @@
   "description": "express mongodb api",
   "main": "app.js",
   "scripts": {
+    "start": "node ./bin/www",
     "test": "export ENVIROMENT=test && mocha --recursive --timeout 5000"
   },
   "keywords": [
