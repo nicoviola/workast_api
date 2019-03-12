@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "pretest": "export ENVIRONMENT=test",
-    "test": "export ENVIROMENT=test && npm run pretest && mocha --recursive --timeout 5000"
+    "test": "export ENVIROMENT=test && npm run pretest && mocha --recursive --timeout 5000",
+    "apidoc": "apidoc -i routes/ -i const/ -o apidoc/"
   },
   "keywords": [
     "express",
@@ -16,6 +17,7 @@
   "author": "nicoviola",
   "license": "ISC",
   "dependencies": {
+    "apidoc": "^0.17.7",
     "chai": "^4.2.0",
     "chai-arrays": "^2.0.0",
     "chai-http": "^4.2.1",
@@ -34,5 +36,13 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
+  },
+  "apidoc": {
+    "name": "Workast api",
+    "title": "Workast API",
+    "order": [
+      "User",
+      "Article"
+    ]
   }
 }
