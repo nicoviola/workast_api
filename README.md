@@ -38,3 +38,9 @@ To run tests in a separate container.
 ````bash
     $ docker-compose -f docker-compose.test.yml
 ````
+
+Documentation 
+apidoc is not ready functional, so look for each individual route file ./routes/* for endpoint documentation. 
+
+Header: 
+Include custom header "x-api-key": env.API_KEY in your requests to avoid 'Not allowed by cors' error
