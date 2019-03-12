@@ -88,6 +88,22 @@ module.exports = {
         }catch (e) {
             next(e)
         }
+    },
+    search: async (req, res, next) => {
+        const tags = req.query.tags
+        let articles = await Article.find({
+            tags:{
+                $in: tags
+            }
+        })
+        res.json({
+            success: true,
+            message:'',
+            data: {
+                articles: articles
+            }
+        })
     }
+
 
 }
