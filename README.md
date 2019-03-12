@@ -34,7 +34,7 @@ To run commands on the container, execute _$docker exec -it <container_name> bas
     $ npm run test
 ````
 
-To run tests in a separate container and execute the test. 
+To run tests in a separate container. 
 ````bash
     $ docker-compose -f docker-compose.test.yml
 ````
