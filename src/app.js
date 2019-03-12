@@ -11,7 +11,6 @@ let errorHandler = require('./middlewares/error')
 require('./database')
 
 const app = express()
-app.set('port', config.api_listening_port)
 app.use(express.urlencoded({extended: false}));
 app.use(express.json())
 app.use(morgan('dev'))
@@ -52,8 +51,5 @@ app.use(function (req, res, next) {
 // error handler
 app.use(errorHandler)
 
-app.listen(app.get('port'), ()=>{
-    console.log('listening on port ',app.get('port') )
-})
 
 module.exports = app
