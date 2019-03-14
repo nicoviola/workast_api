@@ -21,7 +21,7 @@ let whitelist = config.allowedOrigins
 let apiKey = config.apiKey
 
 let corsOptions = {
-    methods: ['GET', 'POST', 'DELETE'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
     allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range', 'X-Api-Key'],
     credentials: true,
     optionsSuccessStatus: 200
