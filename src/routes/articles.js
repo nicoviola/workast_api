@@ -109,7 +109,7 @@ router.post('/', validate(articleSchemes.createArticle), articleController.creat
  * @apiUse ValidationError
  */
 
-router.post('/:id([0-9a-fA-F]{24})', validate(articleSchemes.updateArticle), articleController.updateArticle)
+router.put('/:id([0-9a-fA-F]{24})', validate(articleSchemes.updateArticle), articleController.updateArticle)
 /*
 * @api {delete} /articles/:id  Delete an article
 * @apiName DeleteArticle
