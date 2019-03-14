@@ -61,7 +61,7 @@ describe('Integration - Article ', () => {
                 })
 
         })
-        it('Shouldṇ\'t create a Article without userId', (done) => {
+        it('Shouldṇ\'t create an Article without userId', (done) => {
             let article = articleFactory({name: articleMock.name})
             chai.request(server)
                 .post('/articles')
@@ -78,7 +78,7 @@ describe('Integration - Article ', () => {
                 })
 
         })
-        it('Shouldṇ\'t create a Article with an invalid userId', (done) => {
+        it('Shouldṇ\'t create an Article with an invalid userId', (done) => {
             let article = articleFactory()
             article.userId = faker.random.uuid()
             chai.request(server)
@@ -96,7 +96,7 @@ describe('Integration - Article ', () => {
                 })
 
         })
-        it('Shouldṇ\'t create a Article associated with an unsaved user', (done) => {
+        it('Shouldṇ\'t create an Article associated with an unsaved user', (done) => {
             let article = articleFactory()
             article.userId = unsavedUserId
             chai.request(server)
@@ -116,11 +116,11 @@ describe('Integration - Article ', () => {
         })
     })
 
-    describe('POST articles/:id', () => {
+    describe('PUT articles/:id', () => {
         it('should update an article', (done) => {
             let article = articleFactory()
             chai.request(server)
-                .post(`/articles/${articleMock._id}`)
+                .put(`/articles/${articleMock._id}`)
                 .send(article)
                 .set("X-api-key", config.apiKey)
                 .end((err, res) => {
@@ -139,7 +139,7 @@ describe('Integration - Article ', () => {
         it('Shouldṇ\'t update an article that has not been created yet', (done) => {
             let article = articleFactory()
             chai.request(server)
-                .post(`/articles/${unsavedUserId}`)
+                .put(`/articles/${unsavedUserId}`)
                 .send(article)
                 .set("X-api-key", config.apiKey)
                 .end((err, res) => {
@@ -157,7 +157,7 @@ describe('Integration - Article ', () => {
             let article = articleFactory()
             article.userId = unsavedUserId
             chai.request(server)
-                .post(`/articles/${articleMock._id}`)
+                .put(`/articles/${articleMock._id}`)
                 .send(article)
                 .set("X-api-key", config.apiKey)
                 .end((err, res) => {
